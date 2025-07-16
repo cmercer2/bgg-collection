@@ -8,14 +8,19 @@ function fetch_bgg_collection() {
 
     $games = [];
     if (($handle = fopen($csvPath, 'r')) !== false) {
-        $headers = fgetcsv($handle); // Skip header
+        $headers = fgetcsv($handle); // Read header row
+        $headerMap = array_flip($headers);
         while (($data = fgetcsv($handle)) !== false) {
             $games[] = [
-                'name' => $data[0] ?? '',
-                'id' => $data[1] ?? '',
-                'year' => $data[2] ?? '',
-                'minplayers' => $data[3] ?? '',
-                'maxplayers' => $data[4] ?? ''
+                'name' => $data[$headerMap['name']] ?? '',
+                'id' => $data[$headerMap['objectid']] ?? '',
+                'year' => $data[$headerMap['year']] ?? '',
+                'minplayers' => $data[$headerMap['minplayers']] ?? '',
+                'maxplayers' => $data[$headerMap['maxplayers']] ?? '',
+                'playtime' => $data[$headerMap['playingtime']] ?? '',
+                'expansion' => $data[$headerMap['expansion']] ?? '',
+                'average' => $data[$headerMap['average']] ?? '',
+                'avgweight' => $data[$headerMap['avgweight']] ?? '',
             ];
         }
         fclose($handle);

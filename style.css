@@ -1,31 +1,121 @@
 body {
-    font-family: sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     padding: 20px;
+    background-color: #f8f8f8;
+    color: #333;
+    text-align: center;
 }
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+h1 a {
+    text-decoration: none;
+    color: inherit;
+}
+h1 a:hover {
+    text-decoration: underline;
+}
+
 form {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
+
+select {
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 400;
+}
+
+form input,
+form button {
+    font-size: 1em;
+    padding: 8px 12px;
+    margin: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+form button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
 .collection {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    justify-content: center;
+    gap: 20px;
 }
+
 .game {
     border: 1px solid #ccc;
     padding: 10px;
-    width: 150px;
+    width: 180px;
     text-align: center;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-.game img {
-    max-width: 100%;
-    height: auto;
-}
-.info {
-    margin-top: 10px;
-}
+
 .game img {
     width: 100%;
-    max-width: 150px;
-    height: auto;
+    height: 200px;
     object-fit: contain;
+}
+
+.info {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.9em;
+}
+
+.info strong {
+    font-size: 1.3em;
+    color: #222;
+}
+
+.info span {
+    color: #777;
+    margin-top: 2px;
+}
+
+.info div {
+    margin-top: 4px;
+    font-weight: bold;
+}
+.rating-low {
+    color: #e74c3c; /* red */
+}
+.rating-mid {
+    color: #f39c12; /* orange */
+}
+.rating-high {
+    color: #27ae60; /* green */
+}
+.weight-easy {
+    color: #2ecc71; /* green */
+}
+.weight-medium {
+    color: #f1c40f; /* yellow */
+}
+.weight-hard {
+    color: #e67e22; /* orange */
+}
+.weight-extreme {
+    color: #e74c3c; /* red */
 }

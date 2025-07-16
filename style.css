@@ -1,0 +1,25 @@
+body {
+    font-family: sans-serif;
+    padding: 20px;
+}
+form {
+    margin-bottom: 20px;
+}
+.collection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.game {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 150px;
+    text-align: center;
+}
+.game img {
+    max-width: 100%;
+    height: auto;
+}
+.info {
+    margin-top: 10px;
+}

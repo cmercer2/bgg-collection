@@ -1,27 +1,26 @@
 <?php
-function fetch_bgg_collection($username) {
-    $url = "https://boardgamegeek.com/xmlapi2/collection?username=" . urlencode($username) . "&own=1";
-
-    // BGG API may respond with 202 if data not ready
-    for ($i = 0; $i < 5; $i++) {
-        $xml = @simplexml_load_file($url);
-        if ($xml && $xml->item) break;
-        sleep(2); // wait and retry
+function fetch_bgg_collection($username = null) {
+    $csvPath = __DIR__ . '/collection.csv';
+    if (!file_exists($csvPath)) {
+        return false;
     }
-
-    if (!$xml) return false;
 
     $games = [];
-    foreach ($xml->item as $item) {
-        $games[] = [
-            'id' => (string)$item['objectid'],
-            'name' => (string)$item->name,
-            'year' => (string)$item->yearpublished,
-            'image' => (string)$item->image,
-        ];
+    if (($handle = fopen($csvPath, 'r')) !== false) {
+        $headers = fgetcsv($handle); // Skip header
+        while (($data = fgetcsv($handle)) !== false) {
+            $games[] = [
+                'id' => $data[0] ?? '',
+                'name' => $data[1] ?? '',
+                'year' => $data[2] ?? '',
+                'image' => $data[3] ?? '',
+                'minplayers' => $data[4] ?? '',
+                'maxplayers' => $data[5] ?? ''
+            ];
+        }
+        fclose($handle);
     }
 
-    file_put_contents("collection.json", json_encode($games));
     return $games;
 }
 ?>

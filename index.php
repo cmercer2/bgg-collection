@@ -3,22 +3,15 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require_once("bgg.php");
 
-$username = $_GET['username'] ?? '';
 $games = [];
 $playerCount = $_GET['players'] ?? null;
 
-if ($username) {
-    $games = fetch_bgg_collection($username);
-    if ($games === false) {
-        echo "<p>Error: Could not read collection.csv</p>";
-        $games = []; // prevent further errors
-    }
+$games = fetch_bgg_collection();
 
-    if ($playerCount !== null && is_numeric($playerCount)) {
-        $games = array_filter($games, function($game) use ($playerCount) {
-            return $playerCount >= $game['minplayers'] && $playerCount <= $game['maxplayers'];
-        });
-    }
+if ($playerCount !== null && is_numeric($playerCount)) {
+    $games = array_filter($games, function($game) use ($playerCount) {
+        return $playerCount >= $game['minplayers'] && $playerCount <= $game['maxplayers'];
+    });
 }
 ?>
 <!DOCTYPE html>
@@ -30,7 +23,6 @@ if ($username) {
 <body>
     <h1>BoardGameGeek Collection Viewer</h1>
     <form method="get">
-        <input type="text" name="username" placeholder="BGG Username" value="<?=htmlspecialchars($username)?>">
         <label for="players">Number of Players:</label>
         <input type="number" name="players" id="players" min="1" value="<?= htmlspecialchars($_GET['players'] ?? '') ?>">
         <button type="submit">Load Collection</button>
@@ -40,7 +32,7 @@ if ($username) {
         <div class="collection">
             <?php foreach ($games as $game): ?>
                 <div class="game">
-                    <img src="<?=htmlspecialchars($game['image'])?>" alt="">
+                    <img src="<?=htmlspecialchars($game['image'])?>" alt="" width="300">
                     <div class="info">
                         <strong><?=htmlspecialchars($game['name'])?></strong>
                         <span>(<?=htmlspecialchars($game['year'])?>)</span>
@@ -49,8 +41,6 @@ if ($username) {
                 </div>
             <?php endforeach; ?>
         </div>
-    <?php elseif ($username): ?>
-        <p>Failed to load collection for user <strong><?=htmlspecialchars($username)?></strong>.</p>
     <?php endif; ?>
 </body>
 </html>

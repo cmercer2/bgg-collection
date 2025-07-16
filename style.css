@@ -23,3 +23,9 @@ form {
 .info {
     margin-top: 10px;
 }
+.game img {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+    object-fit: contain;
+}

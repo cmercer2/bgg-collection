@@ -8,9 +8,9 @@ function fetch_bgg_collection() {
 
     $games = [];
     if (($handle = fopen($csvPath, 'r')) !== false) {
-        $headers = fgetcsv($handle); // Read header row
+        $headers = fgetcsv($handle, 0, ",", '"', "\\"); // Read header row
         $headerMap = array_flip($headers);
-        while (($data = fgetcsv($handle)) !== false) {
+        while (($data = fgetcsv($handle, 0, ",", '"', "\\")) !== false) {
             $games[] = [
                 'name' => $data[$headerMap['name']] ?? '',
                 'id' => $data[$headerMap['objectid']] ?? '',

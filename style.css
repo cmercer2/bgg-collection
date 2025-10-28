@@ -142,42 +142,6 @@ select {
     /* red */
 }
 
-@media only screen and (min-width: 393px) and (min-height: 852px) and (-webkit-device-pixel-ratio: 3) {
-    .collection {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-    }
-
-    .game {
-        width: 45%;
-    }
-
-    .info {
-        align-items: center;
-        text-align: center;
-        font-size: 1em;
-    }
-
-    h1 {
-        font-size: 3.2em;
-    }
-
-    .options {
-        font-size: 1.4em;
-    }
-
-    form input,
-    form button {
-        font-size: 1.4em;
-        padding: 8px 12px;
-        margin: 5px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
-}
-
 .checkbox-wrapper-1 *,
 .checkbox-wrapper-1 ::after,
 .checkbox-wrapper-1 ::before {
@@ -316,4 +280,38 @@ select {
 
 .button-load:hover {
   box-shadow: rgba(39, 174, 96, .2) 0 6px 12px;
+}
+
+@media only screen and (min-width: 393px) and (min-height: 852px) and (-webkit-device-pixel-ratio: 3) {
+    .collection {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .game {
+        width: 45%;
+    }
+
+    .info {
+        align-items: center;
+        text-align: center;
+        font-size: 1.4em;
+    }
+
+    h1 {
+        font-size: 3.2em;
+    }
+    label {
+        font-size: 2em;
+    }
+    select {
+        font-size: 1.6em;
+        padding: 10px;
+    }
+    .button-load {
+        font-size: 1.5em;
+        padding: 18px 26px;
+    }
 }

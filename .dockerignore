@@ -1,0 +1,9 @@
+cache/
+.git
+.gitignore
+node_modules
+vendor
+*.log
+*.sqlite
+tmp
+/.vscode

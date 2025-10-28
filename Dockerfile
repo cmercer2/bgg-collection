@@ -8,8 +8,9 @@ RUN apt-get update \
         libjpeg62-turbo-dev \
         libpng-dev \
         libwebp-dev \
+        libcurl4-openssl-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
-    && docker-php-ext-install -j"$(nproc)" gd \
+    && docker-php-ext-install -j"$(nproc)" gd curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Enable allow_url_fopen to allow remote file access from PHP (simplexml_load_file, file_get_contents)

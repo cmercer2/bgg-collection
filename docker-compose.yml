@@ -1,5 +1,6 @@
 services:
   web:
+    container_name: bgg-collection
     build: .
     image: bgg-collection-web:latest
     ports:

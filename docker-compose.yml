@@ -3,7 +3,7 @@ services:
     build: .
     image: bgg-collection-web:latest
     ports:
-      - "8080:80"
+      - "8888:80"
     volumes:
       - ./:/var/www/html:delegated
       - ./cache:/var/www/html/cache

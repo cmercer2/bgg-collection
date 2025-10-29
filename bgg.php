@@ -81,22 +81,9 @@ function fetch_bgg_collection() {
             // Fetch image using bearer helper (if token exists) or simple file_get_contents
             $imageData = @fetch_with_bearer($imageUrl, 20);
             if ($imageData) {
-                $imageInfo = @getimagesizefromstring($imageData);
-                $mime = $imageInfo['mime'] ?? '';
-
-                switch ($mime) {
-                    case 'image/jpeg':
-                        $srcImage = @imagecreatefromjpeg("data://image/jpeg;base64," . base64_encode($imageData));
-                        break;
-                    case 'image/png':
-                        $srcImage = @imagecreatefrompng("data://image/png;base64," . base64_encode($imageData));
-                        break;
-                    case 'image/gif':
-                        $srcImage = @imagecreatefromgif("data://image/gif;base64," . base64_encode($imageData));
-                        break;
-                    default:
-                        $srcImage = @imagecreatefromstring($imageData);
-                }
+                // Create image resource directly from the raw bytes. Using imagecreatefromstring
+                // avoids building large data:// base64 wrappers and reduces memory overhead.
+                $srcImage = @imagecreatefromstring($imageData);
 
                 if ($srcImage !== false) {
                     $width = imagesx($srcImage);
@@ -108,11 +95,21 @@ function fetch_bgg_collection() {
                     imagecopyresampled($resized, $srcImage, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
                     imagejpeg($resized, $fullCachedPath, 85);
 
+                    // Free GD resources asap
                     imagedestroy($srcImage);
                     imagedestroy($resized);
 
+                    // Free the raw image buffer and other temporaries to reduce peak memory
+                    unset($imageData);
+                    unset($imageInfo);
+                    if (function_exists('gc_collect_cycles')) {
+                        gc_collect_cycles();
+                    }
+
                     $game['image'] = $cachedPath;
                 } else {
+                    // If we couldn't create an image resource, drop the raw buffer to avoid leaks
+                    unset($imageData);
                     $game['image'] = '';
                 }
             } else {

@@ -16,6 +16,9 @@ RUN apt-get update \
 # Enable allow_url_fopen to allow remote file access from PHP (simplexml_load_file, file_get_contents)
 RUN printf "; enable URL fopen for remote streams\nallow_url_fopen=On\n" > /usr/local/etc/php/conf.d/99-allow-url-fopen.ini
 
+# Increase memory limit to handle image processing
+COPY php-custom.ini /usr/local/etc/php/conf.d/99-php-custom.ini
+
 # Add a small entrypoint to ensure cache dir exists and has correct ownership
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh

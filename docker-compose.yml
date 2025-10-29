@@ -11,3 +11,4 @@ services:
     environment:
       - APACHE_RUN_USER=www-data
       - APACHE_RUN_GROUP=www-data
+      - BGG_API_TOKEN
